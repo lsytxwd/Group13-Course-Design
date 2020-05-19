@@ -8,6 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 //@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @SpringBootApplication
+//@MapperScan("com.zhuang.group13projectdesign.mapper")
 @MapperScan
 public class Group13ProjectDesignApplication {
 

@@ -23,12 +23,17 @@
         <td th:text="${emp.user}"></td>
         <td th:text="${#dates.format(emp.time, 'yyyy-MM-dd HH:mm')}"></td>
         <td>
-            <a th:href="@{/news/}+${emp.id}">编辑</a>
-            <button th:attr="del_uri=@{/news/}+${emp.id}">删除</button>
+            <a th:href="@{/notice/}+${emp.id}">编辑</a>
+            <button th:attr="del_uri=@{/notice/}+${emp.id}">删除</button>
         </td>
     </tr>
     </tbody>
 </table>
+<p>当前 <span th:text="${pageInfo.pageNum}"></span> 页,总 <span th:text="${pageInfo.pages}"></span> 页,共 <span th:text="${pageInfo.total}"></span> 条记录</p>
+<a th:href="@{/notice}">首页</a>
+<a th:href="@{/notice(pageNum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1)}">上一页</a>
+<a th:href="@{/notice(pageNum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}">下一页</a>
+<a th:href="@{/notice(pageNum=${pageInfo.pages})}">尾页</a>
 
 </body>
 </html>

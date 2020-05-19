@@ -20,21 +20,23 @@ public class NewsController {
     private NewsService newsService;
 
     //新闻列表，学生、老师和管理员皆可查看
-//    @GetMapping(value = "/news")
-//    public String updateNews(@RequestParam(defaultValue = "1", value = "pageNum") Integer pageNum, Model model) {
-//        PageHelper.startPage(pageNum,2);
-//        List<News> list = newsService.listNews();
-//        PageInfo<News> pageInfo = new PageInfo<News>(list);
-//        model.addAttribute("pageInfo", pageInfo);
-//        return "news";
-//    }
-
     @GetMapping(value = "/news")
-    public String getNews(Model model) {
-        Collection<News> collection = newsService.listNews();
-        model.addAttribute("news", collection);
+    public String updateNews(@RequestParam(defaultValue = "1", value = "pageNum") Integer pageNum, Model model) {
+        PageHelper.startPage(pageNum,2);
+        List<News> list = newsService.getAllNews();
+        PageInfo<News> pageInfo = new PageInfo<News>(list);
+        model.addAttribute("news", pageInfo.getList());
+        model.addAttribute("count", pageInfo.getPages());
+        model.addAttribute("pageInfo", pageInfo);
         return "news";
     }
+
+//    @GetMapping(value = "/news")
+//    public String getNews(Model model) {
+//        Collection<News> collection = newsService.listNews();
+//        model.addAttribute("news", collection);
+//        return "news";
+//    }
 
     //新闻详情，学生、老师和管理员皆可查看
     @GetMapping(value = "/news/{id}")

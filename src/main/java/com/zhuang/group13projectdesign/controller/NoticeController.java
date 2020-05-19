@@ -1,5 +1,7 @@
 package com.zhuang.group13projectdesign.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.zhuang.group13projectdesign.bean.News;
 import com.zhuang.group13projectdesign.bean.Notice;
 import com.zhuang.group13projectdesign.service.NoticeService;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.Collection;
+import java.util.List;
 
 @Controller
 public class NoticeController {
@@ -19,9 +22,13 @@ public class NoticeController {
 
     //公告列表，学生老师皆可查看
     @GetMapping(value = "/notice")
-    public String updateNotice(Model model) {
-        Collection<Notice> collection = noticeService.listNotice();
-        model.addAttribute("notice", collection);
+    public String getNotice(@RequestParam(defaultValue = "1", value = "pageNum") Integer pageNum, Model model) {
+        PageHelper.startPage(pageNum,2);
+        List<Notice> list = noticeService.getAllNotice();
+        PageInfo<Notice> pageInfo = new PageInfo<Notice>(list);
+        model.addAttribute("notice", pageInfo.getList());
+        model.addAttribute("count", pageInfo.getPages());
+        model.addAttribute("pageInfo", pageInfo);
         return "notice";
     }
 
@@ -65,7 +72,7 @@ public class NoticeController {
 
     //删除公告，，，老师和管理员可删除
     @GetMapping(value = "/deleteNotice/{id}")
-    public String deleteNews(@PathVariable("id") int id) {
+    public String deleteNotice(@PathVariable("id") int id) {
         noticeService.deleteNotice(id);
         return "notice";
     }

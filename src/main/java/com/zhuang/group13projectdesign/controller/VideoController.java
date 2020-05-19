@@ -1,5 +1,7 @@
 package com.zhuang.group13projectdesign.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.zhuang.group13projectdesign.bean.Video;
 import com.zhuang.group13projectdesign.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class VideoController {
@@ -22,8 +26,13 @@ public class VideoController {
 
     //查看视频列表，学生，老师，管理员皆可
     @GetMapping(value = "/videoList")
-    public String getAllVideo(Model model) {
-        model.addAttribute("video", videoService.getAllVideo());
+    public String getAllVideo(@RequestParam(defaultValue = "1", value = "pageNum") Integer pageNum, Model model) {
+        PageHelper.startPage(pageNum, 2);
+        List<Video> list = videoService.getAllVideo();
+        PageInfo<Video> pageInfo = new PageInfo<Video>(list);
+        model.addAttribute("video", pageInfo.getList());
+        model.addAttribute("count", pageInfo.getPages());
+        model.addAttribute("pageInfo", pageInfo);
         return "videoList";
     }
 
@@ -41,8 +50,11 @@ public class VideoController {
     //上传视频，老师
     @PostMapping(value = "/uploadVideo/{user}")
     public String uploadVideo(@PathVariable("user") String username,
-                              @RequestParam("file") MultipartFile file) {
+                              @RequestParam("file") MultipartFile file,
+                              @RequestParam("courseName") String courseName,
+                              @RequestParam("details") String details) {
         String fileName = file.getOriginalFilename();
+//        fileName = fileName+ UUID.randomUUID();
         String path = "E:/upload/video";
         File dest = new File(path+"/"+fileName);
 
@@ -55,10 +67,12 @@ public class VideoController {
             file.transferTo(dest);
             Video video = new Video();
             video.setTitle(fileName);
+            video.setCourseName(courseName);
+            video.setDetails(details);
             video.setPath(path);
             video.setUser(username);
             videoService.insertVideo(video);
-            return "main";
+            return "videoList";
         }catch (IllegalStateException e) {
             e.printStackTrace();
             return "false";

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 
 import javax.annotation.Resource;
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class NewsService {
@@ -22,6 +23,11 @@ public class NewsService {
 //        System.out.println(list);
 //        model.addAttribute("news", list);
         return collection;
+    }
+
+    public List<News> getAllNews() {
+        List<News> list = newsMapper.getAllNews();
+        return list;
     }
 
     //新闻详情

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class NoticeService {
@@ -14,8 +15,13 @@ public class NoticeService {
     private NoticeMapper noticeMapper;
 
     //公告列表
-    public Collection<Notice> listNotice() {
-        Collection<Notice> list = noticeMapper.getAllNotice();
+//    public Collection<Notice> listNotice() {
+//        Collection<Notice> list = noticeMapper.getAllNotice();
+//        return list;
+//    }
+
+    public List<Notice> getAllNotice() {
+        List<Notice> list = noticeMapper.getAllNotice();
         return list;
     }
 

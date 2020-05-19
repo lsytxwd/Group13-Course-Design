@@ -8,6 +8,8 @@
     <div th:text="${session.user.username}"></div>
 <!--    <a methods="get" th:each="${news}" th:href="@{/news}">-->
     <form th:action="@{/uploadVideo/}+${session.user.username}" action="/uploadVideo" method="post" enctype="multipart/form-data">
+        <input name="courseName" value="课程名">
+        <input name="details" value="课程详情">
         <p>选择文件: <input type="file" name="file"/></p>
         <p><input type="submit" value="提交"/></p>
     </form>

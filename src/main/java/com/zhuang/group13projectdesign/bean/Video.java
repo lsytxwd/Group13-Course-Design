@@ -1,10 +1,14 @@
 package com.zhuang.group13projectdesign.bean;
 
+import org.springframework.context.annotation.Bean;
+
 import java.util.Date;
 
 public class Video {
     private int id;
+    private String courseName;
     private String title;
+    private String details;
     private String user;
     private Date time;
     private String path;
@@ -47,5 +51,21 @@ public class Video {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
     }
 }

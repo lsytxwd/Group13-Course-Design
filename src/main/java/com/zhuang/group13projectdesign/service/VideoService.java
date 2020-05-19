@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class VideoService {
@@ -14,9 +15,9 @@ public class VideoService {
     private VideoMapper videoMapper;
 
     //获取所有视频信息
-    public Collection<Video> getAllVideo() {
-        Collection<Video> collection = videoMapper.getAllVideo();
-        return collection;
+    public List<Video> getAllVideo() {
+        List<Video> list = videoMapper.getAllVideo();
+        return list;
     }
 
     //将视频文件名和地址上传到数据库

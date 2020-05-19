@@ -4,13 +4,14 @@ import com.zhuang.group13projectdesign.bean.Notice;
 import org.apache.ibatis.annotations.*;
 
 import java.util.Collection;
+import java.util.List;
 
 @Mapper
 public interface NoticeMapper {
 
     @Options(useGeneratedKeys = true, keyProperty = "id")
     @Select("select * from notice")
-    public Collection<Notice> getAllNotice();
+    public List<Notice> getAllNotice();
 
     @Select("select * form notice where id= #{id}")
     public Notice getNoticeInfoById(int id);
